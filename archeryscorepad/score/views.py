@@ -184,7 +184,7 @@ def addscorecard (request, pk):
 
 def readscorecard(request, id):
     readscorecard = roundscore.objects.values().filter(scoreid=id)
-    round = Score.objects.values('archer_id', 'id', 'rndname__roundname').filter(id=id)
+    round = Score.objects.values('archer_id', 'id', 'rndname__roundname', 'dateshot').filter(id=id)
     print('Round', round)
     roundcount = readscorecard.count()
 
