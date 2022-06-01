@@ -1,0 +1,25 @@
+{% extends "score/layout.html" %}
+{% load static %}
+
+{% block body %}
+ 
+<div class="container-fluid">
+
+{% if user.is_authenticated %}
+    <h1>Welcome to the Archer Record Keeping system</h1>
+    <p>Please use the sidebar menu to navigate around the site</p>
+    <h3>V1<h/3>
+    {{ message }}
+{% else %}
+<div class="card">
+    <div class="card-body">
+        <h1 div class="card-title">Archery Score Pad Home Page</div>
+            <p class="card-text">
+                Text text text
+            </p>
+
+    </div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

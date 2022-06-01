@@ -1,0 +1,56 @@
+{% extends "score/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if user.is_authenticated %}
+
+<div class="container">
+
+
+  <ul class="list-unstyled row">
+    <li class="list-group-item list-group-item-dark col-md-12"><h2>Archery Profile</h2></li>
+    <li class="list-group-item col-md-6"><b>Name:</b> {{ user.first_name }} {{ user.last_name }}</li>
+    <li class="list-group-item col-md-6"><b>Username:</b> {{ user.username }} </li>
+    <li class="list-group-item col-md-6"><b>Club:</b> {{ user.club }}</li>
+    <li class="list-group-item col-md-6"><b>EMail:</b> {{ user.email }} </li>
+    <li class="list-group-item col-md-6"><b>Date of Birth:</b> {{ user.DoB }} </li>
+    <li class="list-group-item col-md-6"><b>Gender:</b> {{ user.get_gender_display }}</li>
+    <li class="list-group-item col-md-6"><b>Age:</b> {{ user.age }} </li>
+    <li class="list-group-item col-md-6"><b>Shooting as:</b>  {% for rnd in rnds %}
+                                                        {% if user.shooting == rnd.id%}
+                                                            {{ rnd.ageband }}
+                                                        {% endif %}
+                                                      {% endfor %}</li>
+    <li class="list-group-item col-md-6"><b>Handicap:</b>  {% for post in cumHcap %}
+                                                              {% if forloop.last %}
+                                                                  {{ post.cumulativeHandicap}} 
+                                                              {% endif %}
+                                                            {% endfor %}</li>                                                      
+     <li class="list-group-item col-md-6"><b>Current Classification:</b> 
+                                                          {% for object in classification %}
+                                                          
+                                                            {% if forloop.first %}
+                                                              {{ classification }}
+                                                            {% endif %}
+                                                                                                                                                                       
+                                                          {% endfor %} </li>
+    </ul>
+
+<br>
+
+  <ul class="list-unstyled row">
+    <li class="list-group-item list-group-item-dark col-md-12"><h2>Rounds Shot</h2></li>  
+    {% for post in posts %}
+    
+          <a href="{% url 'score:scores' post.rndname__id %}" ><li class="list-group-item col-md-6"><b>Round Name:</b> {{ post.rndname__roundname }}</a>
+          <p class="card-text"><small class="text-muted">Times Shot: {{ post.rndname__count }}</small></p></li>
+      {% empty %}
+        <div class="alert alert-info" role="alert">
+          No rounds recorded yet!
+        </div>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endif %}
+{% endblock %}

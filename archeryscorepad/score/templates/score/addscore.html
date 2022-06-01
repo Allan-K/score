@@ -1,0 +1,43 @@
+{% extends "score/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
+{% block body %}
+  
+<div class="container">
+    {% if message %}
+        <div class="alert alert-danger" role="alert">
+            Please check your score, it appears to be greater then the maximum score for this round
+        </div>
+    {% endif %}
+<h2>Add a Score</h2>
+
+    <form method='POST' action="{% url 'score:addscore' %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                {{ form.rndname|as_crispy_field }}
+            </div> 
+        </div>         
+        <div class="row">
+            <div class="col-4">
+                {{ form.dateshot|as_crispy_field }}
+            </div>
+            <div class="col-4">
+                {{ form.bowtype|as_crispy_field }}
+            </div>
+            <div class="col-4">
+                {{ form.score|as_crispy_field }}
+            </div> 
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+
+    </form> 
+
+ </div>
+
+{% endblock %}

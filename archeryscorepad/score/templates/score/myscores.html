@@ -1,0 +1,57 @@
+{% extends "score/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if user.is_authenticated %}
+
+
+<div class="container">
+
+    {% for post in score %}
+        {%if  forloop.first  %}
+            <h2>Scores for: {{ request.user|title }} </h2>
+        {% endif %}
+    {% endfor %}
+    <div class="table-responsive">
+        <table class="table table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Round</th>
+            <th scope="col">Bowtype</th>
+            <th scope="col">Score</th>
+            <th scope="col">Classification</th>
+            <th scope='col'>Handicap</th>
+            <th scope="col">Date Shot</th>
+            <th scope="col">Scorecards</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in score %}
+            {% if  user.id  ==  post.archer_id  %} 
+            <tr>
+            <td class="align-middle">{{ post.rndname}} {{ post.classindex }}</td>
+            <td class="align-middle">{{ post.bowtype }}</td>
+            <td class="align-middle">{{ post.score }}</td>
+            
+            <td class="align-middle">{{ post.classification }}</td>
+            <td class="align-middle">{{ post.handicap }}</td>           
+            <td class="align-middle">{{ post.dateshot | date:"D d M Y"}}</td>
+            <td> <h5><a class="btn btn-outline-dark btn-block btn-sm" href="{% url 'score:addscorecard' post.id %}">Add Score</a></h5>
+            <h5><a class="btn btn-outline-dark btn-block btn-sm" href="{% url 'score:readscorecard' post.id %}">Read Score</a></h5></td>
+            </tr>
+            {% endif %}
+
+            
+        </tbody>
+        {% endfor %}
+
+        </table>
+    </div>
+</div>
+{% else %}
+
+My Scores
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "score/layout.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
+{% block body %}
+
+<h1>Add a club</h1>
+
+<form method='POST' action="{% url 'score:addaclub' %}">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-4">
+            {{ form.club_name|as_crispy_field }}
+        </div> 
+    </div>         
+    <div class="row">
+        <div class="col-4">
+            {{ form.region|as_crispy_field }}
+        </div>
+ 
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Submit">
+
+</form> 
+<br>
+<h1>Clubs currently in the system</h1>
+
+
+<div class="table-responsive">
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Club Name</th>
+        <th scope="col">Region</th>
+        </tr>
+    </thead>  
+    <tbody>
+{% for item in clubs %}         
+    <tr>
+        <td>{{ item.club_name }}</td>
+        <td>{{ item.get_region_display }}</td>
+    </tr>
+    </tbody>
+{% endfor %}
+</table>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Archery Score Pad{% endblock %}</title>
+        <link rel="shortcut icon" href="{% static 'score/favicon.ico' %}"/>
+        <link href="{% static 'score/styles.css' %}" rel="stylesheet">     
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet"/>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+
+
+{% block extrahead %}
+{% endblock %}
+    </head>
+    <body>
+<div class="container-fluid">
+<div class="row">
+    <div class="sidebar col-lg-2 col-md-3 p-3">
+
+        <h3>Archery Score Pad</h3>
+        <div>
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username|title }}</strong>
+            {% else %}
+                Not signed in.
+            {% endif %}
+        </div>
+<hr class="style1">
+
+            {% block nav %}        
+            {% if user.is_authenticated %}
+
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:index' %}">Home</a></h5>
+                </div>                
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:myprofile' user.id %}">My Profile</a></h5>
+                </div>                  
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:myscores' user.id %}">My Records</a></h5>
+                </div>                   
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:addscore' %}">Add a score</a></h5>
+                </div>
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:clubscores' user.club_id %}">Club Scores</a></h5>
+                </div>
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:roundscores' %}">Round Scores</a></h5>
+                </div>
+
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:logout' %}">Log Out</a></h5>
+                </div>
+
+
+            {% if user.is_staff %}
+
+                <button class="btn btn-outline-danger btn-block" data-toggle="dropdown" >
+                  Site Admin
+                </button>
+                <div class="dropdown-menu dropdown-menu-lg-right">
+                    <a class="dropdown-item" href="{% url 'score:addaclub' %}">Add a Club</a>
+                    <a class="dropdown-item" href="#">Add a Classification</a>
+                    <a class="dropdown-item" href="#">Add a Handicap</a>
+                </div>
+
+            {% endif %}
+            {% else %}
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:login' %}">Log In</a></h5>
+                </div>
+                <div>
+                    <h5><a class="btn btn-outline-dark btn-block" href="{% url 'score:registration' %}">Register</a></h5>
+                </div>
+
+            {% endif %}
+
+
+<p class="small"><a href="mailto:admin@admin.com">Click here</a> to contact the site admin</p>
+            {% endblock %}
+        </div>
+            <div class="main col-lg-10 col-md-9 p-5">
+                {% block body %}
+                {% endblock %}
+            </div>
+    </div>
+</div>
+</div>
+
+<script>
+var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+  return new bootstrap.Dropdown(dropdownToggleEl)
+})
+</script>
+    </body>
+</html>

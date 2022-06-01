@@ -1,0 +1,43 @@
+{% extends "score/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if user.is_authenticated %}
+
+
+<div class="container">
+    {% for post in posts %}
+        {%if  forloop.first  %}
+            <h1>Scores for: {{ post.rndname }}</h1>
+        {% endif %}
+    {% endfor %}
+    <div class="table-responsive">
+        <table class="table">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Archer</th>
+            <th scope="col">Bowtype</th>
+            <th scope="col">Score</th>
+            <th scope="col">Date Shot</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+            <td>{{ post.archer|title }}</td>
+            <td>{{ post.bowtype }}</td>
+            <td>{{ post.score }}</td>
+            <td>{{ post.created_date | date:"D d M Y"}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% else %}
+
+My Scores
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "score/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
+{% block body %}
+  
+<div class="container">
+    <ul class=" list-group-flush row">
+        <li class="list-group-item list-group-item-dark col-md-12">
+             <h2>Add a Score</h2>
+        </li>
+        <li class="list-group-item col-md-6 border-bottom-0" >
+            {% for x in post %}
+              <h4>Round Name: {{ x.rndname__roundname }}</h4>  
+            {% endfor %}              
+        </li>
+        <li class="list-unstyled list-group-item col-md-7 border-top-0 border-bottom-0"> 
+                <li class="list-group-item col-md-6 border-top-0 border-bottom-0">
+                    <h5>Enter score for end {{ endCount }}</h5>
+                </li>       
+            <form method='POST' action="{% url 'score:addscorecard' posts.pk %}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-1">
+                        {{ form.shot_1|as_crispy_field }}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_2|as_crispy_field }}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_3|as_crispy_field}}
+                    </div> 
+                    <div class="col-1">
+                        {{ form.shot_4|as_crispy_field}}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_5|as_crispy_field }}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_6|as_crispy_field }}
+                    </div>
+                </div>
+                <li class="list-group-item col-md-6 border-top-0 border-bottom-0">
+                    <h5>Enter score for end {{ endCount }}</h5>
+                </li>
+                <div class="row">
+                    <div class="col-1">
+                        {{ form.shot_7|as_crispy_field }}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_8|as_crispy_field }}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_9|as_crispy_field}}
+                    </div> 
+                    <div class="col-1">
+                        {{ form.shot_10|as_crispy_field}}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_11|as_crispy_field }}
+                    </div>
+                    <div class="col-1">
+                        {{ form.shot_12|as_crispy_field }}
+                    </div>
+                </div>
+                    <input class="btn btn-primary" type="submit" value="Submit" />
+            </form> 
+        </li>
+ </div>
+
+{% endblock %}

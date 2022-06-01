@@ -1,0 +1,72 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Archery Score Pad{% endblock %}</title>
+        <link rel="shortcut icon" href="{% static 'score/favicon.ico' %}"/>
+        <link href="{% static 'score/styles.css' %}" rel="stylesheet">     
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet"/>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+
+
+{% block extrahead %}
+{% endblock %}
+    </head>
+    <body>
+
+        <h1>Archery Score Pad</h1>
+        <div>
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username|title }}</strong>
+            {% else %}
+                Not signed in.
+            {% endif %}
+        </div>
+
+        <ul class="nav">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <h2><a class="nav-link badge badge-light" href="{% url 'score:myprofile' user.id %}">My Profile</a></h2>
+                </li>                                    
+                <li class="nav-item">
+                    <h2><a class="nav-link badge badge-light" href="{% url 'score:addscore' %}">Add a score</a></h2>
+                </li>
+                <li class="nav-item">
+                    <h2><a class="nav-link badge badge-light" href="{% url 'score:clubscores' %}">Club Scores</a></h2>
+                </li>
+                <li class="nav-item">
+                    <h2><a class="nav-link badge badge-light" href="{% url 'score:roundscores' %}">Round Scores</a></h2>
+                </li>
+                <li class="nav-item">
+                    <h2><a class="nav-link badge badge-light" href="{% url 'score:logout' %}">Log Out</a></h2>
+                </li>
+            {% if user.is_staff %}
+            <li class="nav-item">
+                <h2><a class="nav-link badge badge-light" href="{% url 'score:site_admin' %}">Site Admin</a></h2>
+            </li>
+            {% endif %}
+            {% else %}
+                <li class="nav-item">
+                    <h2><a class="nav-link badge badge-light" href="{% url 'score:login' %}">Log In</a></h2>
+                </li>
+                <li class="nav-item">
+                    <h2><a class="nav-link badge badge-light" href="{% url 'score:registration' %}">Register</a></h2>
+                </li>
+
+            {% endif %}
+        </ul>
+        <hr>
+
+        {% block body %}
+        {% endblock %}
+<script>
+var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+  return new bootstrap.Dropdown(dropdownToggleEl)
+})
+</script>
+    </body>
+</html>

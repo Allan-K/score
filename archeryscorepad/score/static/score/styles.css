@@ -1,0 +1,22 @@
+#hint_id_password1{
+    visibility: hidden;
+}
+
+.table td{
+    border-bottom: rgb(68, 68, 68) solid 2px !important;
+    }
+
+hr.style1 {
+    border-top: 2px solid rgb(68, 68, 68);
+    }
+
+#bloc1, #bloc2 {
+    display:inline-block;
+    
+    }
+
+#bloc2 {
+    padding-top:10px;
+    float: right;
+    vertical-align: bottom;
+}

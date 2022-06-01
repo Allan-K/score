@@ -1,0 +1,52 @@
+{% extends "score/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if user.is_authenticated %}
+
+
+<div class="container">
+
+    {% for post in score %}
+        {%if  forloop.first  %}
+            <h2>Scores for: {{ request.user|title }} </h2>
+        {% endif %}
+    {% endfor %}
+    <div class="table-responsive">
+        <table class="table">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Round</th>
+            <th scope="col">Bowtype</th>
+            <th scope="col">Score</th>
+            <th scope="col">Classification</th>
+            <th scope='col'>Handicap</th>
+            <th scope="col">Date Shot</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in score %}
+            {% if  user.id  ==  post.archer_id  %} 
+            <tr>
+            <td>{{ post.rndname}} {{ post.classindex }} {{ post.id }}</td>
+            <td>{{ post.bowtype }}</td>
+            <td>{{ post.score }}</td>
+            
+            <td>{{ post.classification }}</td>
+            <td>{{ post.handicap }}</td>           
+            <td>{{ post.dateshot | date:"D d M Y"}}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+        {% endfor %}
+
+        </table>
+    </div>
+</div>
+{% else %}
+
+My Scores
+
+{% endif %}
+
+{% endblock %}

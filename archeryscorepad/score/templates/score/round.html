@@ -1,0 +1,41 @@
+{% extends "score/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if user.is_authenticated %}
+
+<div class="container">
+
+
+    <div class="table-responsive">
+        <table class="table">
+        <thead class="thead-dark">
+            <tr>
+            {% for name in names %}
+                <h1>{{ user.first_name|title }}'s scores for {{ name.rndname }}</h1>
+            {% endfor %}
+            </tr>
+            <tr>
+            <th scope="col">Bowtype</th>
+            <th scope="col">Score</th>
+            <th scope="col">Date Shot</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+        {%if  user.id  ==  post.archer_id  %}
+            <tr>
+            <td>{{ post.bowtype }}</td>
+            <td>{{ post.score }}</td>
+            <td>{{ post.created_date | date:"D d M Y"}}</td>
+            </tr>
+        </tbody>
+        {% endif %}
+        {% endfor %}
+        </table>
+
+
+
+</div>
+{% endif %}
+{% endblock %}

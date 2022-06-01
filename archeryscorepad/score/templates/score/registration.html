@@ -1,0 +1,71 @@
+{% extends "score/layout.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Register</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'score:registration' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                {{ form.username|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row">  
+            <div class="col-6">
+            {{ form.first_name|as_crispy_field }}
+            </div> 
+
+            <div class="col-6">
+            {{ form.last_name|as_crispy_field }}
+            </div>
+        </div>         
+        <div class="row">
+            <div class="col-6">
+                {{ form.DoB|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.gender|as_crispy_field }}
+            </div> 
+        </div>
+        <div class="row">
+            <div class='col-6'>
+                {{ form.club|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.email|as_crispy_field }}
+            </div> 
+        </div>
+        <div class="row">  
+            <div class="col-6">
+            {{ form.password1|as_crispy_field }}
+            {{ form.password.errors}}
+            </div>
+            <div class="col-6">
+            {{ form.password2|as_crispy_field }}
+            </div>
+        </div>
+        <div>
+       <input class="btn btn-primary" type="submit" value="Register">
+        </div>
+        </form>
+        <br>
+        <div>
+        Already have an account? <a href="{% url 'score:login' %}">Log In here.</a>
+        </div>  
+        </div>
+
+
+    
+
+{% endblock %}

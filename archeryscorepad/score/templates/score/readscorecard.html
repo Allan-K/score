@@ -1,0 +1,86 @@
+{% extends "score/layout.html" %}
+{% load crispy_forms_tags %}
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+{% load static %}
+
+{% block body %}
+
+<div class="container">
+
+    {% for post in round %}
+        {% if forloop.first %}
+            <h2>Round: {{ post.rndname__roundname }} </h2>
+        {% endif %}
+    {% endfor %}
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm table-col-12 table-bordered" style="border-right:4px">        
+            <thead class="thead-dark">
+                <tr>
+                    <th class="col-md-1" style="width: calc(1 * 100% / 20)">End</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">1</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">2</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">3</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">4</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">5</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">6</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">Total</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 80)"></th>                    
+                    <th class="col-md-1" style="width: calc(1 * 100% / 20)">End</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">7</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">8</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">9</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">10</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">11</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">12</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">Total</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">Tens</th>
+                    <th class="col-md-1 text-center" style="width: calc(1 * 100% / 20)">Doz Total</th>
+                </tr>
+            </thead>
+            <tbody>    
+            {% for form in readscorecard %}        
+                <tr>
+                    <td class="c1" scope="col">{{ form.end_1_counter }}</td>                
+                    <td class="c2 text-center" scope="col">{{ form.shot_1}}</td>                
+                    <td class="c3 text-center" scope="col">{{ form.shot_2}}</td>
+                    <td class="c4 text-center" scope="col">{{ form.shot_3}}</td>
+                    <td class="c5 text-center" scope="col">{{ form.shot_4}}</td>
+                    <td class="c6 text-center" scope="col">{{ form.shot_5 }}</td>
+                    <td class="c7 text-center" scope="col">{{ form.shot_6}}</td>
+                    <td class="c8 text-center" scope="col">{{ form.end_1}}</td>
+                    <td class="c9" scope="col" style="background: rgb(33 37 41)"></td> 
+                    <td class="c9" scope="col">{{ form.end_2_counter }}</td>               
+                    <td class="c10 text-center" scope="col">{{ form.shot_7}}</td>                
+                    <td class="c11 text-center" scope="col">{{ form.shot_8}}</td>
+                    <td class="c12 text-center" scope="col">{{ form.shot_9}}</td>
+                    <td class="c13 text-center" scope="col">{{ form.shot_10}}</td>
+                    <td class="c14 text-center" scope="col">{{ form.shot_11}}</td>
+                    <td class="c15 text-center" scope="col">{{ form.shot_12}}</td>
+                    <td class="c16 text-center" scope="col">{{ form.end_2}}</td>
+                    <td class="c17 text-center" scope="col">{{ form.tens }}</td>
+                    <td class="c17 text-center" scope="col">{{ form.doz }}</td>
+               </tr> 
+                            
+            </tbody>           
+            {% endfor %} 
+            </table>
+        </div>
+
+    </div>
+        {% for post in round %}
+    {% if message %}
+        <div class="alert alert-info" role="alert">
+            No End Scores have been recorded for this round yet.  Please go back to the 'My Records' screen and add your scores.
+            <a class="btn btn-outline-dark btn-block" href="{% url 'score:myscores' post.archer_id%}">Add Scores</a>
+        </div>
+    {% endif %} 
+        {% endfor %}
+
+    </div>
+            
+
+
+{% endblock %}
