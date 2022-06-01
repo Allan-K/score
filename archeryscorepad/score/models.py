@@ -426,7 +426,7 @@ class roundscore(models.Model):
     end_2_counter = models.IntegerField(default=0)    
     tens = models.IntegerField(default=0, blank=True, null=True)
     doz = models.IntegerField(default = 0, null=True)
-    distance_score = models.IntegerField(default=0)
+    distance_score = models.IntegerField(default=0, null=True)
 
     def end_1_counter_calc(self):
         end1Counter_result = self.end_count + self.end_count - 1
@@ -453,20 +453,14 @@ class roundscore(models.Model):
         return doz_result
     doz_calc = property(doz_calc)
 
-    def distance_total_calc(self):
-        if self.end_count == 1:
-            doz_1 = self.end_1 + self.end_2
-            doz_total = doz_1
-            return doz_total
-        if self.end_count == 2:
-            doz_2 = self.end_1 + self.end_2
-            doz_total = doz_1 + doz_2
-            return doz_total
-        if self.end_count == 3:
-            doz_3 = self.end_1 + self.end_2
-            doz_total = doz_1 + doz_2 + doz_3
-            return doz_total
-    distance_total_calc = property(distance_total_calc)
+#    def distance_total_calc(self):
+#        if self.end_count == 1:
+#            doz_1 = self.doz
+#            return doz_1
+#        if self.end_count == 2:
+#            doz_2 = self.doz + doz_1
+#            return doz_2
+#    distance_total_calc = property(distance_total_calc)
 
 
     def tens_calc(self):
@@ -506,7 +500,7 @@ class roundscore(models.Model):
         self.end_2 = self.end_2_calc 
         self.tens = self.tens_calc
         self.doz = self.doz_calc
-        self.doz_score = self.distance_total_calc
+        #self.distance_score = self.distance_total_calc
         self.end_1_counter = self.end_1_counter_calc
         self.end_2_counter = self.end_2_counter_calc
         super(roundscore, self).save(*args, **kwargs)
