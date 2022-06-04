@@ -62,13 +62,21 @@
                     <td class="c16 text-center" scope="col">{{ form.end_2}}</td>
                     <td class="c17 text-center" scope="col">{{ form.tens }}</td>
                     <td class="c17 text-center" scope="col">{{ form.doz }}</td>
+                    {% if form.end_count == 3 %}
+                    <td class="c17 text-center" scope="col">{{ distance_score }}</td>
+                    {% endif %}
                </tr> 
                             
             </tbody>           
             {% endfor %} 
-            </table>
-        </div>
 
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ distance_score }}
+            </div>
+        </div>
+            </table>
     </div>
         {% for post in round %}
     {% if message %}

@@ -163,6 +163,8 @@ def addscorecard (request, pk):
     posts = get_object_or_404(Score, pk=pk)
     post = Score.objects.values('id', 'rndname__roundname').filter(id = pk)
     endCount = roundscore.objects.values('scoreid').filter(scoreid=pk).count()
+    distScore = roundscore.objects.filter(scoreid=pk).aggregate(Distance_Count = Sum( 'doz'))
+    print('dist', distScore)
     roundMax = Score.objects.values_list('rndname__numberOfEnds').filter(id=pk)
     user = Score.objects.values('archer_id', 'id').filter(id=pk)
     print('User', user)
@@ -172,6 +174,7 @@ def addscorecard (request, pk):
             post = form.save(commit=False)
             post.scoreid = pk
             post.end_count = endCount+1
+            #post.distance_score = distScore
             post.save()
             return render(request, 'score/index.html' )
         else:
@@ -184,9 +187,10 @@ def addscorecard (request, pk):
 
 def readscorecard(request, id):
     readscorecard = roundscore.objects.values().filter(scoreid=id)
+    countEnds = roundscore.objects.filter(scoreid=id).aggregate(Distance_Count = Sum( 'doz'))
+    
     round = Score.objects.values('archer_id', 'id', 'rndname__roundname', 'dateshot').filter(id=id)
-    x=readscorecard
-    print('Round', x)
+    print('Round', countEnds)
     roundcount = readscorecard.count()
 
     if roundcount == 0 :
