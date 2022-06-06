@@ -1,4 +1,6 @@
 from csv import list_dialects
+from operator import is_not
+from queue import Empty
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MaxValueValidator
@@ -453,20 +455,24 @@ class roundscore(models.Model):
         return doz_result
     doz_calc = property(doz_calc)
 
-#    def distance_total_calc(self):
-#        result1 = 0
-#        result2 = 0
-#        result3 = 0
-#        if self.end_count == 1:
-#            result1 = self.doz
-#            print(result1)
-#        if self.end_count == 2:
-#            result2 = self.doz + result1
-#            print(result1)
-#        if self.end_count == 3:
-#            result3 = self.doz + result2
-#            print(result3)
-#    distance_total_calc = property(distance_total_calc)
+    def distance_total_calc(self):
+
+        if self.end_count == 1:
+            #result1 = 0
+            result1 = self.doz
+            #return result1
+        if self.end_count == 2:
+            #result2 = 0
+            result2 = self.doz
+            #return result2
+        if self.end_count == 3:
+            #result3 = 0
+            result3 = self.doz
+            #return result3
+
+            resultdist =  result1 + result2
+            return resultdist
+    distance_total_calc = property(distance_total_calc)
 
 
     def tens_calc(self):
@@ -506,7 +512,7 @@ class roundscore(models.Model):
         self.end_2 = self.end_2_calc 
         self.tens = self.tens_calc
         self.doz = self.doz_calc
-#        self.distance_score = self.distance_total_calc
+        self.distance_score = self.distance_total_calc
         self.end_1_counter = self.end_1_counter_calc
         self.end_2_counter = self.end_2_counter_calc
         super(roundscore, self).save(*args, **kwargs)
